@@ -310,8 +310,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?1488135378);
-  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?&1488135378#iefix) format("embedded-opentype"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff2?1488135378) format("woff2"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff?1488135378) format("woff"), url(/fonts/bootstrap/glyphicons-halflings-regular.ttf?1488135378) format("truetype"), url(/fonts/bootstrap/glyphicons-halflings-regular.svg?1488135378#glyphicons_halflingsregular) format("svg");
+  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?1488191935);
+  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?&1488191935#iefix) format("embedded-opentype"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff2?1488191935) format("woff2"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff?1488191935) format("woff"), url(/fonts/bootstrap/glyphicons-halflings-regular.ttf?1488191935) format("truetype"), url(/fonts/bootstrap/glyphicons-halflings-regular.svg?1488191935#glyphicons_halflingsregular) format("svg");
 }
 .glyphicon {
   position: relative;
@@ -7368,6 +7368,8 @@ body {
   background-color: #BC7044;
   border-bottom: 3px solid #d09b7c;
   color: #fff;
+  background: -webkit-linear-gradient(45deg, blue, red);
+  background: linear-gradient(45deg, blue red);
 }
 .header__logo {
   margin-top: 10px;
