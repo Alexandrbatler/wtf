@@ -24,7 +24,7 @@
     <section class="main__container">
         <div class="main__bg"></div>
         <div class="row container">
-            <div id="qwerty" class="col-xs-8 main__description">
+            <div class="col-xs-8 main__description">
                 <header class="main__title">
                     <h2 class="main__heading">WTF?!</h2>
                     <p class="main__subheading">What the Film?!</p>
@@ -52,16 +52,24 @@
             <div class="col-xs-3 col-xs-offset-1 main__reg">
                 <form method="post" class="main__reg-form">
                     <h3>Registry</h3>
+                    <hr class="main__hr">
                     <div class="form-group">
-                        <input type="text" name="login" class="form-control" placeholder="Login">
+                        <input type="text" name="login" class="form-control" placeholder="Login *" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        <input type="email" name="email" class="form-control" placeholder="Email *" required>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Registry</button>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Password *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password-repeat" class="form-control"
+                               placeholder="Repeat your password *" required>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-block btn-registry">Registry</a>
                     <hr class="main__hr">
                     <p>or</p>
-                    <a href="#" class="btn btn-success btn-block">Login</a>
+                    <a href="#" class="btn btn-success btn-block btn-login">Login</a>
                 </form>
             </div>
         </div>
@@ -73,11 +81,13 @@
                 <a href="#" class="footer__rating">Rating</a>
             </div>
             <div class="col-xs-2 footer__copyright">
-                wtf.local © 2017
+                wtf.local © <?php echo date('Y'); ?>
             </div>
         </div>
     </footer>
 </div>
 
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>
