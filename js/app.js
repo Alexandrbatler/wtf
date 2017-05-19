@@ -1,64 +1,72 @@
 'use strict';
 
 $(function () {
-    $('a[href="#"]').click(function (e) {
+    $('[href="#"]').click(function (e) {
         e.preventDefault();
     });
 
-    $('.btn-registry').click(function (e) {
-        let $errors = $('.error');
-        let $inputs = $('.input');
+    $('form').submit(function (e) {
+        e.preventDefault();
+
+        let $form = $(e.target);
+        let $errors = $form.find('.error');
+        let $inputs = $form.find('.input');
 
         $errors
             .addClass('hide')
             .text('');
         $inputs.removeClass('error__input');
 
-        let formData = new FormData($(this).parent('form')[0]);
+        let formData = new FormData($form[0]);
 
-        let login          = formData.get('login');
-        let email          = formData.get('email');
-        let password       = formData.get('password');
-        let passwordRepeat = formData.get('password-repeat');
         let isError        = false;
         let inputErrors    = [];
 
-        if (login.length < 4) {
+        if (formData.get('login') !== undefined && formData.get('login').length < 4) {
             isError = true;
-            $('.error-login').text('Логин не может быть менее 3 символов.');
+            $form
+                .find('.error-login')
+                .text('Логин не может быть менее 3 символов');
             inputErrors.push('input__login');
         }
 
         let passError = '';
-        if (password.length < 6) {
+        if (formData.get('password') !== undefined  && formData.get('password').length < 6) {
             isError = true;
             passError += 'Пароль не может быть менее 6 символов. ';
             inputErrors.push('input__password');
         }
-        if (password !== passwordRepeat) {
+        if (formData.get('password-repeat') !== undefined && formData.get('password') !== formData.get('password-repeat')) {
             isError = true;
-            passError += 'Пароль и его повтор должны совпадать.';
+            passError += 'Пароль и его подтверждение должны совпадать';
             inputErrors.push('input__password');
         }
-        $('.error-password').text(passError);
+        $form
+            .find('.error-password')
+            .text(passError);
 
-        if (!(/^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i.test(email))) {
+        let pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+        if (formData.get('email') !== undefined && !(pattern.test(formData.get('email')))) {
             isError = true;
-            $('.error-email').text('Введите корректный email');
+            $form
+                .find('.error-email')
+                .text('Введите корректный email');
             inputErrors.push('input__email');
         }
 
         if (isError) {
             $errors.removeClass('hide');
             inputErrors.map(function (className) {
-                $(`.${className}`).addClass('error__input');
+                $form
+                    .find(`.${className}`)
+                    .addClass('error__input');
             });
 
             return;
         }
 
         $.ajax({
-            url: '/include/Scripts/reg.php',
+            url: $form.attr('href'),
             method: 'POST',
             data: formData,
             dataType: 'json',
@@ -72,7 +80,8 @@ $(function () {
                 Object.keys(errors).map(function (name) {
                     let messages = errors[name].join('. ');
 
-                    $('[name="' + name + '"]')
+                    $form
+                        .find('[name="' + name + '"]')
                         .addClass('error__input')
                         .siblings('.error')
                         .removeClass('hide')

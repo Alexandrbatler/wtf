@@ -50,29 +50,26 @@
             </div>
 
             <div class="col-xs-3 col-xs-offset-1 main__reg">
-                <form method="post" class="main__reg-form">
+                <form action="/include/Scripts/reg.php" method="post" class="main__reg-form">
                     <h3>Registry</h3>
                     <hr class="main__hr">
                     <div class="form-group">
-                        <input type="text" name="login" class="form-control input input__login" placeholder="Логин *" required>
+                        <input type="text" name="login" class="form-control input input__login" placeholder="Логин *">
                         <div class="text-danger error error-login hide"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control input input__email" placeholder="Email *" required>
+                        <input type="email" name="email" class="form-control input input__email" placeholder="Email *">
                         <div class="text-danger error error-email hide"></div>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control input input__password" placeholder="Пароль *" required>
+                        <input type="password" name="password" class="form-control input input__password" placeholder="Пароль *">
                         <div class="text-danger error error-password hide"></div>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password-repeat" class="form-control"
-                               placeholder="Повторите ваш пароль *" required>
+                               placeholder="Повторите ваш пароль *">
                     </div>
-                    <a href="#" class="btn btn-primary btn-block btn-registry">Registry</a>
-                    <hr class="main__hr">
-                    <p>or</p>
-                    <a href="#" class="btn btn-success btn-block btn-login">Login</a>
+                    <button type="submit" class="btn btn-primary btn-block btn-registry">Регистрация</button>
                 </form>
             </div>
         </div>
