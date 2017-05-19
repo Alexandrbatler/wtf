@@ -9,7 +9,7 @@ $args = [
     'login'           => FILTER_SANITIZE_STRING,
     'password'        => FILTER_SANITIZE_STRING,
     'password-repeat' => FILTER_SANITIZE_STRING,
-    'email'           => FILTER_SANITIZE_EMAIL,
+    'email'           => FILTER_VALIDATE_EMAIL,
 ];
 $data = filter_var_array($_POST, $args);
 
@@ -18,6 +18,13 @@ if (!$core->db->connect()) {
     die(implode('\r\n', $core->getErrors()));
 }
 
+$query = <<< SQL
+    SELECT `login`
+    FROM `user`
+SQL;
+
+$logins = $core->db->qfa($query)[0];
+
 $rules = [
     'login' => [
         'min' => [
@@ -25,7 +32,7 @@ $rules = [
             'message' => 'Длина логина не может быть менее 3 символов',
         ],
         'unique' => [
-            'value' => $data['login'],
+            'value' => $logins,
             'message' => 'Данный логин уже занят',
         ],
     ],
@@ -50,4 +57,25 @@ $rules = [
 $validator = new Validator($data, $rules);
 $results = $validator->validate();
 
-echo json_encode($results, JSON_PRETTY_PRINT);
+if (count($results['errors']) > 0) {
+    echo json_encode($results, JSON_PRETTY_PRINT);
+
+    die();
+}
+
+$query = <<< SQL
+    INSERT INTO `user` (`login`, `password`, `email`)
+    VALUES (:login, :password, :email);
+SQL;
+
+$data = [
+    ':login' => $data['login'],
+    ':password' => sha1($data['password'] . SALT),
+    ':email' => $data['email'],
+];
+
+if ($core->db->query($query, $data)) {
+    echo json_encode('success', JSON_PRETTY_PRINT);
+} else {
+    echo json_encode($core->getErrors(), JSON_PRETTY_PRINT);
+}

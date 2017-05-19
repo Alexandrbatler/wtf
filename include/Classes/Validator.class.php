@@ -49,7 +49,7 @@ class Validator
     private function validate_min($value, $param = PHP_INT_MIN)
     {
         if (is_string($value)) {
-            return mb_strlen($value) >= $param;
+            return mb_strlen($value, 'utf-8') >= $param;
         }
 
         return $value >= $param;
@@ -58,7 +58,7 @@ class Validator
     private function validate_max($value, $param = PHP_INT_MAX)
     {
         if (is_string($value)) {
-            return mb_strlen($value) <= $param;
+            return mb_strlen($value, 'utf-8') <= $param;
         }
 
         return $value <= $param;
@@ -74,7 +74,7 @@ class Validator
         return $value === $param;
     }
 
-    private function unique($value, $array) {
-        return in_array($value, $array);
+    private function validate_unique($value, $array) {
+        return !in_array($value, $array);
     }
 }

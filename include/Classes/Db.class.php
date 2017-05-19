@@ -10,7 +10,7 @@ class Db
     private $dbms = '';
     private $dsn = '';
 
-    private $errorArr = null;
+    private $errors = [];
 
     public function __construct()
     {
@@ -22,8 +22,6 @@ class Db
         $this->login = $settings['login'];
         $this->password = $settings['password'];
         $this->dsn = "{$this->dbms}:dbname={$this->db};host={$this->host}";
-
-        $this->errorArr = [];
     }
 
     public function connect()
@@ -31,7 +29,7 @@ class Db
         try {
             $this->pdo = new PDO($this->dsn, $this->login, $this->password);
         } catch (PDOException $e) {
-            $this->errorArr[] = $e->getMessage();
+            $this->errors[] = $e->getMessage();
 
             return false;
         }
@@ -44,29 +42,38 @@ class Db
         $this->pdo = null;
     }
 
-    public function query($sql)
+    public function query($sql, $data)
     {
-        return $this->pdo->query($sql);
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($data);
+        } catch(PDOException $e) {
+            $this->errors[] = $e->getMessage();
+
+            return false;
+        }
+
+        return $stmt;
     }
 
-    public function qfa($sql, $fetchStyle = PDO::FETCH_NUM)
+    public function qfa($sql, $data = [], $fetchStyle = PDO::FETCH_NUM)
     {
-        if ($stmt = $this->query($sql)) {
+        if ($stmt = $this->query($sql, $data)) {
             return $stmt->fetchAll($fetchStyle);
         }
 
         return false;
     }
 
-    public function getError()
+    public function getErrors()
     {
         if ($this->pdo !== null) {
             $errArr = $this->pdo->errorInfo();
             if (isset($errArr)) {
-                $this->errorArr[] = $errArr[2];
+                $this->errors[] = $errArr[2];
             }
         }
 
-        return $this->errorArr;
+        return $this->errors;
     }
 }

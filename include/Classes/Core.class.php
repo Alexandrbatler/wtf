@@ -13,7 +13,7 @@ class Core
 
     public function getErrors()
     {
-        $errors = $this->db->getError();
+        $errors = $this->db->getErrors();
 
         return $errors;
     }

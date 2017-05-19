@@ -7364,6 +7364,13 @@ body {
   margin-left: auto;
 }
 
+.error {
+  font-size: 12px;
+}
+.error__input {
+  border-color: #AA1C15;
+}
+
 .header__container {
   background-color: #BC7044;
   border-bottom: 3px solid #d09b7c;

@@ -54,17 +54,20 @@
                     <h3>Registry</h3>
                     <hr class="main__hr">
                     <div class="form-group">
-                        <input type="text" name="login" class="form-control" placeholder="Login *" required>
+                        <input type="text" name="login" class="form-control input input__login" placeholder="Логин *" required>
+                        <div class="text-danger error error-login hide"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Email *" required>
+                        <input type="email" name="email" class="form-control input input__email" placeholder="Email *" required>
+                        <div class="text-danger error error-email hide"></div>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password *" required>
+                        <input type="password" name="password" class="form-control input input__password" placeholder="Пароль *" required>
+                        <div class="text-danger error error-password hide"></div>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password-repeat" class="form-control"
-                               placeholder="Repeat your password *" required>
+                               placeholder="Повторите ваш пароль *" required>
                     </div>
                     <a href="#" class="btn btn-primary btn-block btn-registry">Registry</a>
                     <hr class="main__hr">
