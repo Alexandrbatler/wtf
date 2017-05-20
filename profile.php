@@ -4,14 +4,9 @@ require_once "{$_SERVER['DOCUMENT_ROOT']}include/core.php";
 
 $core = new Core();
 
-$css = $core->page->getCSS();
-
-
 $header = $core->page->getHeader();
 $content = $core->page->getContent();
 $footer = $core->page->getFooter();
-
-$scripts = $core->page->getScripts();
 
 print <<< HTML
     <!DOCTYPE html>
@@ -21,7 +16,7 @@ print <<< HTML
     
         <title>WTF? - What the Film?</title>
     
-        {$css}
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
     
@@ -42,7 +37,8 @@ print <<< HTML
         
     </div>
     
-        {$scripts}
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/app.js"></script>
     </body>
     </html>
 HTML;

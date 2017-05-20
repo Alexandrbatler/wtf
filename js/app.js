@@ -8,7 +8,7 @@ $(function () {
     $('form').submit(function (e) {
         e.preventDefault();
 
-        let $form = $(e.target);
+        let $form   = $(e.target);
         let $errors = $form.find('.error');
         let $inputs = $form.find('.input');
 
@@ -18,9 +18,13 @@ $(function () {
         $inputs.removeClass('error__input');
 
         let formData = new FormData($form[0]);
+        $form
+            .find('input, button')
+            .attr('disabled', 'disabled')
+            .end();
 
-        let isError        = false;
-        let inputErrors    = [];
+        let isError     = false;
+        let inputErrors = [];
 
         if (formData.get('login') !== undefined && formData.get('login').length < 4) {
             isError = true;
@@ -31,7 +35,7 @@ $(function () {
         }
 
         let passError = '';
-        if (formData.get('password') !== undefined  && formData.get('password').length < 6) {
+        if (formData.get('password') !== undefined && formData.get('password').length < 6) {
             isError = true;
             passError += 'Пароль не может быть менее 6 символов. ';
             inputErrors.push('input__password');
@@ -62,6 +66,10 @@ $(function () {
                     .addClass('error__input');
             });
 
+            $form
+                .find('input, button')
+                .removeAttr('disabled');
+
             return;
         }
 
@@ -88,6 +96,10 @@ $(function () {
                         .text(messages);
                 });
             }
+        }).always(function () {
+            $form
+                .find('input, button')
+                .removeAttr('disabled');
         });
     });
 });
