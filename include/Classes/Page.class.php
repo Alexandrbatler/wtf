@@ -15,15 +15,25 @@ class Page
 
     public function getHeader()
     {
+        $action = isset($_SESSION['user'])
+            ? <<< HTML
+                <div class="col-xs-6">
+                    <a href="#" class="header__link header__logout">Выйти</a>
+                </div>
+HTML
+            : <<< HTML
+                <div class="col-xs-6">
+                    <a href="#" class="header__link header__action" data-form="login">Войти</a>
+                </div>
+HTML;
+
         $html = <<< HTML
             <header class="header__container">
                 <div class="row container">
-                    <div class="col-xs-4">
+                    <div class="col-xs-6">
                         <h2 class="header__logo">What The Film?!</h2>
                     </div>
-                    <div class="col-xs-8">
-                        <a href="#" class="header__auth">Login</a>
-                    </div>
+                    {$action}
                 </div>
             </header>
 HTML;
@@ -58,10 +68,10 @@ HTML;
             <footer class="footer__container">
                 <div class="row container">
                     <div class="col-xs-10">
-                        <a href="#" class="footer__rating">Rating</a>
+                        <a href="#" class="footer__rating">Рейтинг игроков</a>
                     </div>
                     <div class="col-xs-2 footer__copyright">
-                        wtf.local © {$date}
+                        "WTF?!" © {$date}
                     </div>
                 </div>
             </footer>
@@ -69,6 +79,7 @@ HTML;
 
         return $html;
     }
+
 
     public function addScript($path) {
         $this->scripts[] = $path;

@@ -6,7 +6,6 @@ $core = new Core();
 
 $css = $core->page->getCSS();
 
-
 $header = $core->page->getHeader();
 $content = $core->page->getContent();
 $footer = $core->page->getFooter();

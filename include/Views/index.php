@@ -26,9 +26,9 @@ echo <<< HTML
         </div>
     </div>
 
-    <div class="col-xs-3 col-xs-offset-1 main__reg">
-        <form action="/include/Scripts/reg.php" method="post" class="main__reg-form">
-            <h3>Registry</h3>
+    <div class="col-xs-3 col-xs-offset-1 main__forms">
+        <form action="/include/Scripts/reg.php" method="post" class="main__form-reg">
+            <h3>Регистрация</h3>
             <hr class="main__hr">
             <div class="form-group">
                 <input type="text" name="login" class="form-control input input__login" placeholder="Логин *">
@@ -46,6 +46,20 @@ echo <<< HTML
                 <input type="password" name="password-repeat" class="form-control" placeholder="Повторите ваш пароль *">
             </div>
             <button type="submit" class="btn btn-primary btn-block btn-registry">Регистрация</button>
+        </form>
+        
+        <form action="/include/Scripts/login.php" method="post" class="main__form-login hide">
+            <h3>Вход</h3>
+            <hr class="main__hr">
+            <div class="form-group">
+                <input type="text" name="login" class="form-control input input__login" placeholder="Логин *">
+                <div class="text-danger error error-login hide"></div>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control input input__password" placeholder="Пароль *">
+                <div class="text-danger error error-password hide"></div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-login">Вход</button>
         </form>
     </div>
 HTML;

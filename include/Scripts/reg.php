@@ -75,7 +75,13 @@ $data = [
 ];
 
 if ($core->db->query($query, $data)) {
-    echo json_encode('success', JSON_PRETTY_PRINT);
+    $_SESSION['user'] = $data['login'];
+
+    $response = [
+        'status' => 'success',
+        'relocate' => '/profile.php',
+    ];
+    echo json_encode($response, JSON_PRETTY_PRINT);
 } else {
     echo json_encode($core->getErrors(), JSON_PRETTY_PRINT);
 }

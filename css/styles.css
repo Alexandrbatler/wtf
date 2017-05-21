@@ -7382,7 +7382,7 @@ body {
   font-size: 60px;
   text-transform: uppercase;
 }
-.header__auth {
+.header__link {
   display: inline-block;
   margin-top: 25px;
   font-size: 20px;
@@ -7390,7 +7390,7 @@ body {
   float: right;
   color: #fff;
 }
-.header__auth:hover, .header__auth:active, .header__auth:focus {
+.header__link:hover, .header__link:active, .header__link:focus {
   text-decoration: none;
   color: #d9d9d9;
 }

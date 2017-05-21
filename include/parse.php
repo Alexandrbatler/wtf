@@ -10,11 +10,7 @@ if (!$db->connect()) {
 }
 
 for($i = 1; $i <= $pages; $i++) {
-    if(!set_time_limit(10)) {
-        $page = '/page/' . ($i - 1);
-
-        die("Истекло время выполнения скрипта на странице: {$page}");
-    }
+    set_time_limit(10);
 
     $curl = curl_init("http://firstclassmovies.tumblr.com/page/{$i}");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -38,7 +34,7 @@ for($i = 1; $i <= $pages; $i++) {
         curl_close($curl);
 
         $query = <<< SQL
-            INSERT INTO `Film` (`name`, `hash`)
+            INSERT INTO `film` (`name`, `hash`)
             VALUES (:name, :hash)
 SQL;
         $data = [
@@ -47,11 +43,7 @@ SQL;
         ];
 
         if (!$db->query($query, $data)) {
-            echo '<pre>';
-            print_r(implode('. ', $db->getErrors()));
-            echo '</pre>';
-
-            die();
+            die(implode('. ', $db->getErrors()));
         }
 
         $serverPath = "/upload/films/{$hash}.png";
