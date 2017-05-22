@@ -19,7 +19,9 @@ for($i = 1; $i <= $pages; $i++) {
     curl_close($curl);
 
     $matches = [];
-    preg_match_all('/src="(.*)" alt="(.*?)\. /mi', $content, $matches);
+
+    // Задание на сдачу лабы №2 - изменить регулярку
+    preg_match_all('/img.*src="(.*?)".*alt="(.*?)\./i', $content, $matches);
 
     foreach ($matches[1] as $key => $link) {
         $title = $matches[2][$key];
