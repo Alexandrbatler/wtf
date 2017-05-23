@@ -5,52 +5,106 @@ $(function () {
         e.preventDefault();
     });
 
+    $('.header__action').click(function (e) {
+        let $this    = $(this);
+        let formType = $this.attr('data-form');
+
+        $('.main__forms')
+            .find('form')
+            .addClass('hide')
+            .end()
+            .find(`.main__form-${formType}`)
+            .removeClass('hide');
+
+        let text = 'Войти';
+        formType = 'login';
+
+        if ($this.text() === text) {
+            text     = 'Регистрация';
+            formType = 'reg';
+        }
+
+        $this
+            .text(text)
+            .attr('data-form', formType);
+    });
+
     $('form').submit(function (e) {
         e.preventDefault();
 
-        let $form   = $(e.target);
-        let $errors = $form.find('.error');
-        let $inputs = $form.find('.input');
+        let formClass = this.className;
+        let $form     = $(`.${formClass}`);
+        let $errors   = $form.find('.error');
+        let $inputs   = $form.find('.input');
 
+        let formData       = new FormData($form[0]);
+        let login          = formData.get('login');
+        let email          = formData.get('email');
+        let password       = formData.get('password');
+        let passwordRepeat = formData.get('password-repeat');
+
+        $form
+            .find('input, button')
+            .attr('disabled', 'disabled');
         $errors
             .addClass('hide')
             .text('');
         $inputs.removeClass('error__input');
 
-        let formData = new FormData($form[0]);
-        $form
-            .find('input, button')
-            .attr('disabled', 'disabled')
-            .end();
+        let isLogin = formClass.indexOf('login') !== -1;
+        let isReg   = formClass.indexOf('reg') !== -1;
 
         let isError     = false;
         let inputErrors = [];
 
-        if (formData.get('login') !== undefined && formData.get('login').length < 4) {
-            isError = true;
-            $form
-                .find('.error-login')
-                .text('Логин не может быть менее 3 символов');
-            inputErrors.push('input__login');
+        let loginErrText = [];
+        if (login !== null) {
+            if (isReg) {
+                if (login.length < 4) {
+                    loginErrText.push('Логин не может быть менее 3 символов');
+                }
+            }
+
+            if (isLogin) {
+                if (login.length === 0) {
+                    loginErrText.push('Данное поле обязательно для заполнения');
+                }
+            }
+
+            if (loginErrText.length > 0) {
+                isError = true;
+                $form
+                    .find('.error-login')
+                    .text(loginErrText.join('. '));
+                inputErrors.push('input__login');
+            }
         }
 
-        let passError = '';
-        if (formData.get('password') !== undefined && formData.get('password').length < 6) {
-            isError = true;
-            passError += 'Пароль не может быть менее 6 символов. ';
-            inputErrors.push('input__password');
+        let passError = [];
+        if (password !== null) {
+            if (passwordRepeat !== null) {
+                if (password.length < 6) {
+                    passError.push('Пароль не может быть менее 6 символов');
+                }
+
+                if (password !== passwordRepeat) {
+                    passError.push('Пароль и его подтверждение должны совпадать');
+                }
+            } else if (password.length === 0) {
+                passError.push('Данное поле обязательно для заполнения');
+            }
+
+            if (passError.length > 0) {
+                isError = true;
+                $form
+                    .find('.error-password')
+                    .text(passError.join('. '));
+                inputErrors.push('input__password');
+            }
         }
-        if (formData.get('password-repeat') !== undefined && formData.get('password') !== formData.get('password-repeat')) {
-            isError = true;
-            passError += 'Пароль и его подтверждение должны совпадать';
-            inputErrors.push('input__password');
-        }
-        $form
-            .find('.error-password')
-            .text(passError);
 
         let pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
-        if (formData.get('email') !== undefined && !(pattern.test(formData.get('email')))) {
+        if (email !== null && !(pattern.test(email))) {
             isError = true;
             $form
                 .find('.error-email')
@@ -74,17 +128,18 @@ $(function () {
         }
 
         $.ajax({
-            url: $form.attr('href'),
+            url: $form.attr('action'),
             method: 'POST',
             data: formData,
             dataType: 'json',
             processData: false,
             contentType: false,
         }).done(function (response) {
-            if (response === 'success') {
-                window.location.href = '/profile.php';
+            if (response['status'] && response['status'] === 'success') {
+                window.location.href = response['relocate'];
             } else if (response['errors'] && response['errors'].length !== 0) {
                 let errors = response['errors'];
+
                 Object.keys(errors).map(function (name) {
                     let messages = errors[name].join('. ');
 

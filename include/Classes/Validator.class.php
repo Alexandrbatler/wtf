@@ -46,7 +46,7 @@ class Validator
         return method_exists('Validator', $method);
     }
 
-    private function validate_min($value, $param = PHP_INT_MIN)
+    private function validate_min($value, $param)
     {
         if (is_string($value)) {
             return mb_strlen($value, 'utf-8') >= $param;
@@ -55,7 +55,7 @@ class Validator
         return $value >= $param;
     }
 
-    private function validate_max($value, $param = PHP_INT_MAX)
+    private function validate_max($value, $param)
     {
         if (is_string($value)) {
             return mb_strlen($value, 'utf-8') <= $param;
