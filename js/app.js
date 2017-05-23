@@ -9,6 +9,8 @@ $(function () {
         let $this    = $(this);
         let formType = $this.attr('data-form');
 
+        // @TODO добавить регулярки в коммит как 3 лаба
+
         $('.main__forms')
             .find('form')
             .addClass('hide')
@@ -54,19 +56,25 @@ $(function () {
         let isLogin = formClass.indexOf('login') !== -1;
         let isReg   = formClass.indexOf('reg') !== -1;
 
+        let regExp;
+
         let isError     = false;
         let inputErrors = [];
 
         let loginErrText = [];
         if (login !== null) {
             if (isReg) {
-                if (login.length < 4) {
-                    loginErrText.push('Логин не может быть менее 3 символов');
+                regExp = /^[a-z0-9]{4,}$/ig;
+
+                if (!regExp.test(login)) {
+                    loginErrText.push('Логин не может быть менее 4 символов и должен состоять из букв и цифр');
                 }
             }
 
             if (isLogin) {
-                if (login.length === 0) {
+                regExp = /^\s*$/ig;
+
+                if (regExp.test(login)) {
                     loginErrText.push('Данное поле обязательно для заполнения');
                 }
             }
@@ -82,15 +90,20 @@ $(function () {
 
         let passError = [];
         if (password !== null) {
+            regExp = /^[a-z0-9]{6,}$/ig;
+
             if (passwordRepeat !== null) {
-                if (password.length < 6) {
-                    passError.push('Пароль не может быть менее 6 символов');
+                if (regExp.test(password)) {
+                    passError.push('Пароль не может быть менее 6 символов и состоять из букв и цифр');
                 }
 
                 if (password !== passwordRepeat) {
                     passError.push('Пароль и его подтверждение должны совпадать');
                 }
-            } else if (password.length === 0) {
+            }
+
+            regExp = /^\s*$/ig;
+            if (regExp.test(password)) {
                 passError.push('Данное поле обязательно для заполнения');
             }
 
