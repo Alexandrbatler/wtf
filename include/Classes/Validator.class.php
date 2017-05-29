@@ -46,6 +46,7 @@ class Validator
         return method_exists('Validator', $method);
     }
 
+//    Лабораторная работа №4 сдана
     private function validate_min($value, $param)
     {
         if (is_string($value)) {
