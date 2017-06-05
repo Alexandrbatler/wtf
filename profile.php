@@ -4,6 +4,7 @@ require_once "{$_SERVER['DOCUMENT_ROOT']}include/core.php";
 
 $core = new Core();
 
+$css = $core->page->getCSS();
 $header = $core->page->getHeader();
 $content = $core->page->getContent();
 $footer = $core->page->getFooter();
@@ -16,7 +17,7 @@ print <<< HTML
     
         <title>WTF? - What the Film?</title>
     
-        <link rel="stylesheet" href="css/styles.css">
+        {$css}
     </head>
     <body>
     
