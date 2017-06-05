@@ -7444,6 +7444,36 @@ body {
   padding-right: 25px;
 }
 
+.profile__login {
+  font-size: 70px;
+  text-align: center;
+  font-family: 'KubeVertiko', 'Arial', sans-serif;
+}
+.profile__count {
+  font-size: 20px;
+  text-align: center;
+}
+.profile__best {
+  font-size: 20px;
+  text-align: center;
+}
+.profile__button {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+.profile__button-start {
+  padding-left: 40px;
+  padding-right: 40px;
+  font-size: 20px;
+}
+.profile__settings-heading {
+  margin-bottom: 25px;
+}
+.profile__settings .profile__form-label {
+  text-align: left;
+}
+
 .footer__container {
   min-height: 150px;
   background-color: #BC7044;

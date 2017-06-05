@@ -7,7 +7,7 @@ class Page
 
     public function __construct()
     {
-        $this->addCSS('css/styles.css');
+        $this->addCSS('/css/styles.css');
 
         $this->addScript('/js/jquery-3.2.1.min.js');
         $this->addScript('/js/app.js');

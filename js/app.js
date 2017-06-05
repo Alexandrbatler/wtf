@@ -9,8 +9,6 @@ $(function () {
         let $this    = $(this);
         let formType = $this.attr('data-form');
 
-        // @TODO добавить регулярки в коммит как 3 лаба
-
         $('.main__forms')
             .find('form')
             .addClass('hide')
