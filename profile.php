@@ -8,6 +8,7 @@ $css = $core->page->getCSS();
 $header = $core->page->getHeader();
 $content = $core->page->getContent();
 $footer = $core->page->getFooter();
+$js = $core->page->getScripts();
 
 print <<< HTML
     <!DOCTYPE html>
@@ -38,8 +39,7 @@ print <<< HTML
         
     </div>
     
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/app.js"></script>
+    {$js}
     </body>
     </html>
 HTML;

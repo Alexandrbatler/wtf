@@ -45,14 +45,14 @@ HTML;
     {
         $html = '';
 
-        $view = stristr($_SERVER['PHP_SELF'], '.php', true);
-        $view = mb_substr($view, 1);
+        $model = stristr($_SERVER['PHP_SELF'], '.php', true);
+        $model = mb_substr($model, 1);
 
-        $pathToView = ROOT . "include/Views/{$view}.php";
-        if (file_exists($pathToView)) {
+        $pathToModel = ROOT . "include/Models/{$model}.php";
+        if (file_exists($pathToModel)) {
             ob_start();
 
-            require_once $pathToView;
+            require_once $pathToModel;
 
             $html = ob_get_clean();
         }
